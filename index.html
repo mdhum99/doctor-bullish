@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EA Settings & Manuals — Doctor Bullish</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        body: ['Sarabun', 'DM Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['DM Sans', 'Sarabun', 'sans-serif'],
+                    },
+                    colors: {
+                        surface: { 50: '#fafafa', 100: '#0d0f12', 200: '#12151a', 300: '#181c23', 400: '#1e232c', 500: '#262c38', 600: '#2f3744' },
+                        gold: { 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d', 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' },
+                        accent: { 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb' },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Sarabun', 'DM Sans', sans-serif; background: #0a0c10; }
+
+        /* === Noise Texture Overlay === */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.028;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+        }
+
+        /* === Glow Effects === */
+        .glow-gold { box-shadow: 0 0 60px -15px rgba(251,191,36,0.15); }
+        .glow-blue { box-shadow: 0 0 60px -15px rgba(59,130,246,0.15); }
+        .glow-line { background: linear-gradient(90deg, transparent, rgba(251,191,36,0.3), transparent); height: 1px; }
+
+        /* === Glass Card === */
+        .glass {
+            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+        }
+        .glass-hover { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .glass-hover:hover {
+            background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%);
+            border-color: rgba(251,191,36,0.15);
+            box-shadow: 0 8px 32px -8px rgba(0,0,0,0.4), 0 0 0 1px rgba(251,191,36,0.05);
+            transform: translateY(-1px);
+        }
+
+        /* === Tab Pills === */
+        .ea-pill {
+            position: relative; overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .ea-pill-active {
+            background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05));
+            border-color: rgba(251,191,36,0.4);
+            color: #fcd34d;
+        }
+        .ea-pill-active::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(251,191,36,0.08), transparent);
+            pointer-events: none;
+        }
+        .ea-pill-inactive {
+            background: rgba(255,255,255,0.03);
+            border-color: rgba(255,255,255,0.08);
+            color: #94a3b8;
+        }
+        .ea-pill-inactive:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.15);
+            color: #e2e8f0;
+        }
+
+        /* === Menu Tabs === */
+        .menu-tab { position: relative; transition: color 0.25s; }
+        .menu-tab::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 2px; background: transparent; transition: background 0.25s;
+            border-radius: 1px 1px 0 0;
+        }
+        .menu-tab-active { color: #fcd34d !important; }
+        .menu-tab-active::after { background: linear-gradient(90deg, #f59e0b, #fbbf24) !important; }
+        .menu-tab-inactive { color: #64748b; }
+        .menu-tab-inactive:hover { color: #94a3b8; }
+
+        /* === Animations === */
+        @keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        @keyframes pulse-slow { 0%,100% { opacity: 0.4; } 50% { opacity: 0.7; } }
+        .anim-fade { animation: fadeUp 0.45s cubic-bezier(0.4,0,0.2,1) forwards; }
+        .shimmer-text {
+            background: linear-gradient(90deg, #fcd34d 0%, #fff 40%, #fcd34d 80%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        /* === Price Tag === */
+        .price-tag {
+            background: linear-gradient(135deg, rgba(251,191,36,0.12), rgba(251,191,36,0.04));
+            border: 1px solid rgba(251,191,36,0.25);
+        }
+
+        /* === Asset Pills === */
+        .asset-pill {
+            padding: 4px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        /* === Step Cards === */
+        .step-card {
+            position: relative; padding-left: 3.5rem;
+        }
+        .step-card .step-num {
+            position: absolute; left: 0; top: 0;
+            width: 2.5rem; height: 2.5rem;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 0.875rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0a0c10;
+        }
+
+        /* === Scrollbar === */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* === Param badge === */
+        .param-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; font-weight: 600;
+            padding: 6px 12px; border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        /* === CTA Button === */
+        .cta-btn {
+            position: relative; overflow: hidden;
+            transition: all 0.3s;
+        }
+        .cta-btn::before {
+            content:''; position:absolute; inset:0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .cta-btn:hover::before { opacity: 1; }
+        .cta-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px -4px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body class="min-h-screen text-slate-300 relative">
+
+    <!-- ===== HEADER ===== -->
+    <header class="sticky top-0 z-50 border-b border-white/[0.06]" style="background: rgba(10,12,16,0.85); backdrop-filter: blur(16px) saturate(1.4);">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                    <i data-lucide="candlestick-chart" class="w-[18px] h-[18px] text-surface-100"></i>
+                </div>
+                <div class="leading-tight">
+                    <h1 class="text-[15px] font-bold text-white tracking-tight font-display">Doctor Bullish</h1>
+                    <p class="text-[11px] text-slate-500 font-medium tracking-wide uppercase">Official EA Manuals</p>
+                </div>
+            </div>
+            <!-- Lang Toggle -->
+            <div class="flex items-center gap-1 p-1 rounded-xl border border-white/[0.08]" style="background: rgba(255,255,255,0.03);">
+                <button id="btn-th" onclick="setLang('th')" class="px-3 py-1.5 text-[13px] font-bold rounded-lg transition-all" style="background: rgba(251,191,36,0.12); color: #fcd34d; border: 1px solid rgba(251,191,36,0.25);">TH</button>
+                <button id="btn-en" onclick="setLang('en')" class="px-3 py-1.5 text-[13px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-300 border border-transparent">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-7 relative z-10">
+
+        <!-- ===== EA SELECTOR ===== -->
+        <div class="flex gap-2 justify-start sm:justify-center overflow-x-auto no-scrollbar pb-1">
+            <button onclick="selectEA('bullish')" id="tab-bullish" class="ea-pill ea-pill-active flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-[13px] border">
+                <i data-lucide="trending-up" class="w-4 h-4"></i> Doctor Bullish
+            </button>
+            <button onclick="selectEA('pips')" id="tab-pips" class="ea-pill ea-pill-inactive flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-[13px] border">
+                <i data-lucide="activity" class="w-4 h-4"></i> Doctor Pips
+            </button>
+            <button onclick="selectEA('strange')" id="tab-strange" class="ea-pill ea-pill-inactive flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-[13px] border">
+                <i data-lucide="zap" class="w-4 h-4"></i> DocStrange
+            </button>
+        </div>
+
+        <!-- ===== HERO CARD ===== -->
+        <div class="glass rounded-2xl p-6 md:p-8 glow-gold anim-fade relative overflow-hidden">
+            <!-- Decorative -->
+            <div class="absolute -right-32 -top-32 w-80 h-80 rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 70%);"></div>
+            <div class="absolute -left-20 -bottom-20 w-48 h-48 rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(59,130,246,0.04) 0%, transparent 70%);"></div>
+
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+                <div class="space-y-3">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-md bg-accent-500/15 text-accent-400 border border-accent-500/20">MT5 Hedge Account</span>
+                        <span id="ea-card-version" class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-md bg-white/5 text-slate-400 border border-white/10">v4.57</span>
+                    </div>
+                    <h2 id="ea-card-name" class="text-3xl md:text-4xl font-extrabold text-white font-display tracking-tight">
+                        Doctor Bullish EA
+                    </h2>
+                    <p id="ea-card-desc" class="text-slate-400 text-sm md:text-[15px] leading-relaxed max-w-xl">
+                        EA สำหรับเทรดทองคำ, BTC, EURUSD ด้วยกลยุทธ์ Trend Follow โดยใช้ EMA/RSI เป็นตัวกรองสัญญาณ
+                    </p>
+                    <!-- Assets -->
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="asset-pill bg-gold-400/10 text-gold-300 border border-gold-400/20">🥇 XAUUSD</span>
+                        <span class="asset-pill bg-orange-400/10 text-orange-300 border border-orange-400/20">₿ BTCUSD</span>
+                        <span class="asset-pill bg-accent-400/10 text-accent-400 border border-accent-400/20">💱 EURUSD</span>
+                    </div>
+                </div>
+                <!-- Price / TF Box -->
+                <div class="price-tag rounded-2xl p-5 flex items-center gap-5 shrink-0">
+                    <div class="text-center">
+                        <p class="text-gold-300/60 text-[11px] font-semibold uppercase tracking-wider mb-0.5" data-th="ราคา" data-en="Price">ราคา</p>
+                        <p id="ea-card-price" class="text-3xl font-black text-gold-300 font-display">$99</p>
+                    </div>
+                    <div class="w-px h-12 bg-gold-400/15"></div>
+                    <div class="text-center">
+                        <p class="text-gold-300/60 text-[11px] font-semibold uppercase tracking-wider mb-0.5" data-th="แนะนำ TF" data-en="Rec. TF">แนะนำ TF</p>
+                        <p class="text-xl font-bold text-gold-200 font-display">M15 – H1</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION MENU ===== -->
+        <div class="border-b border-white/[0.06]">
+            <nav class="flex gap-5 overflow-x-auto no-scrollbar" aria-label="Tabs">
+                <button onclick="selectMenu('guide')" id="menu-guide" class="menu-tab menu-tab-active pb-3 px-1 text-[13px] font-semibold whitespace-nowrap flex items-center gap-2">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> <span data-th="คู่มือและไฟล์ .set" data-en="Manual & .set files">คู่มือและไฟล์ .set</span>
+                </button>
+                <button onclick="selectMenu('install')" id="menu-install" class="menu-tab menu-tab-inactive pb-3 px-1 text-[13px] font-semibold whitespace-nowrap flex items-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i> <span data-th="วิธีติดตั้ง EA" data-en="Installation">วิธีติดตั้ง EA</span>
+                </button>
+                <button onclick="selectMenu('inputs')" id="menu-inputs" class="menu-tab menu-tab-inactive pb-3 px-1 text-[13px] font-semibold whitespace-nowrap flex items-center gap-2">
+                    <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> <span data-th="อ้างอิงพารามิเตอร์" data-en="Input Reference">อ้างอิงพารามิเตอร์</span>
+                </button>
+                <button onclick="selectMenu('contact')" id="menu-contact" class="menu-tab menu-tab-inactive pb-3 px-1 text-[13px] font-semibold whitespace-nowrap flex items-center gap-2">
+                    <i data-lucide="gift" class="w-4 h-4"></i> <span data-th="โปรโมชั่น & ติดต่อ" data-en="Rebates & Contacts">โปรโมชั่น & ติดต่อ</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- =============== CONTENT: GUIDE =============== -->
+        <div id="content-guide" class="space-y-5 anim-fade block">
+
+            <!-- Naming Convention -->
+            <section class="glass rounded-2xl overflow-hidden glass-hover">
+                <div class="px-6 py-4 border-b border-white/[0.06] flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-accent-500/10 flex items-center justify-center">
+                        <i data-lucide="file-code" class="w-4 h-4 text-accent-400"></i>
+                    </div>
+                    <h3 class="text-[15px] font-bold text-white" data-th="โครงสร้างชื่อไฟล์ .set" data-en=".set File Naming Convention">โครงสร้างชื่อไฟล์ .set</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-slate-400 text-sm mb-4" data-th="ชื่อไฟล์ถูกจัดเรียงข้อมูลตามลำดับ เพื่อให้ทราบรายละเอียดที่สำคัญได้ทันที:" data-en="Files are systematically named for quick identification:">ชื่อไฟล์ถูกจัดเรียงข้อมูลตามลำดับ เพื่อให้ทราบรายละเอียดที่สำคัญได้ทันที:</p>
+
+                    <!-- Naming diagram -->
+                    <div class="bg-surface-100 rounded-xl p-4 mb-5 overflow-x-auto border border-white/[0.04]">
+                        <div class="flex flex-wrap gap-2 min-w-max items-center">
+                            <span class="param-badge bg-accent-500/15 text-accent-400 border border-accent-500/20">EA Name</span>
+                            <span class="text-slate-600 font-bold text-lg">–</span>
+                            <span class="param-badge bg-purple-500/15 text-purple-400 border border-purple-500/20">Version</span>
+                            <span class="text-slate-600 font-bold text-lg">–</span>
+                            <span class="param-badge bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">Capital</span>
+                            <span class="text-slate-600 font-bold text-lg">–</span>
+                            <span class="param-badge bg-gold-400/15 text-gold-300 border border-gold-400/20">Asset</span>
+                            <span class="text-slate-600 font-bold text-lg">–</span>
+                            <span class="param-badge bg-orange-500/15 text-orange-400 border border-orange-500/20">TimeFrame</span>
+                            <span class="text-slate-600 font-bold text-lg">–</span>
+                            <span class="param-badge bg-pink-500/15 text-pink-400 border border-pink-500/20">Feature</span>
+                            <span class="text-slate-600 font-bold text-lg">–</span>
+                            <span class="param-badge bg-cyan-500/15 text-cyan-400 border border-cyan-500/20">Date</span>
+                        </div>
+                    </div>
+
+                    <!-- Example -->
+                    <div class="bg-gold-400/[0.06] border border-gold-400/15 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="tag" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i>
+                            <div>
+                                <span class="text-[10px] font-bold text-gold-400 uppercase tracking-wider block mb-0.5" data-th="ตัวอย่างไฟล์" data-en="Example">ตัวอย่างไฟล์</span>
+                                <code id="example-filename" class="font-mono text-sm text-slate-200 font-medium break-all">Doctor Bullish-V4.57-10k-XAUUSD-M30-Aggressive-31102025</code>
+                            </div>
+                        </div>
+                        <button onclick="copyExample()" class="shrink-0 flex items-center gap-1.5 bg-white/5 border border-white/10 text-slate-300 px-3.5 py-2 rounded-lg text-[13px] font-semibold hover:bg-white/10 hover:border-white/15 transition-all w-full sm:w-auto justify-center">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span id="copy-text-btn" data-th="คัดลอก" data-en="Copy">คัดลอก</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Capital Table -->
+            <section class="glass rounded-2xl overflow-hidden glass-hover">
+                <div class="px-6 py-4 border-b border-white/[0.06] flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                        <i data-lucide="banknote" class="w-4 h-4 text-emerald-400"></i>
+                    </div>
+                    <h3 class="text-[15px] font-bold text-white" data-th="ทุนเริ่มต้น (Initial Capital)" data-en="Initial Capital">ทุนเริ่มต้น (Initial Capital)</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-slate-400 text-sm mb-4" data-th="ตัวเลขทุนที่ระบุในไฟล์ .set สามารถประยุกต์ใช้ได้ทั้งบัญชี Cent และ Standard:" data-en="Capital applies to both Cent and Standard accounts:">ตัวเลขทุนที่ระบุในไฟล์ .set สามารถประยุกต์ใช้ได้ทั้งบัญชี Cent และ Standard:</p>
+                    <div class="overflow-x-auto rounded-xl border border-white/[0.06]">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="border-b border-white/[0.06]" style="background: rgba(255,255,255,0.03);">
+                                    <th class="px-5 py-3.5 font-semibold text-slate-400 text-xs uppercase tracking-wider" data-th="ระบุในชื่อไฟล์" data-en="Label">ระบุในชื่อไฟล์</th>
+                                    <th class="px-5 py-3.5 font-semibold text-slate-400 text-xs uppercase tracking-wider" data-th="บัญชี Cent (USC)" data-en="Cent Account">บัญชี Cent (USC)</th>
+                                    <th class="px-5 py-3.5 font-semibold text-slate-400 text-xs uppercase tracking-wider" data-th="บัญชี Standard (USD)" data-en="Standard Account">บัญชี Standard (USD)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/[0.04]">
+                                <tr class="hover:bg-white/[0.02] transition-colors">
+                                    <td class="px-5 py-3.5 font-bold text-white"><span class="font-mono bg-white/5 px-2.5 py-1 rounded-md text-[13px]">10k</span></td>
+                                    <td class="px-5 py-3.5 text-slate-400" data-th="10,000 Cent" data-en="10,000 Cents">10,000 Cent</td>
+                                    <td class="px-5 py-3.5 text-emerald-400 font-semibold font-mono">$10,000</td>
+                                </tr>
+                                <tr class="hover:bg-white/[0.02] transition-colors">
+                                    <td class="px-5 py-3.5 font-bold text-white"><span class="font-mono bg-white/5 px-2.5 py-1 rounded-md text-[13px]">50k</span></td>
+                                    <td class="px-5 py-3.5 text-slate-400" data-th="50,000 Cent" data-en="50,000 Cents">50,000 Cent</td>
+                                    <td class="px-5 py-3.5 text-emerald-400 font-semibold font-mono">$50,000</td>
+                                </tr>
+                                <tr class="hover:bg-white/[0.02] transition-colors">
+                                    <td class="px-5 py-3.5 font-bold text-white"><span class="font-mono bg-white/5 px-2.5 py-1 rounded-md text-[13px]">100k</span></td>
+                                    <td class="px-5 py-3.5 text-slate-400" data-th="100,000 Cent" data-en="100,000 Cents">100,000 Cent</td>
+                                    <td class="px-5 py-3.5 text-emerald-400 font-semibold font-mono">$100,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =============== CONTENT: INSTALL =============== -->
+        <div id="content-install" class="space-y-5 anim-fade hidden">
+            <div class="glass rounded-2xl p-6 md:p-8 glow-blue">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-9 h-9 rounded-lg bg-accent-500/10 flex items-center justify-center">
+                        <i data-lucide="download-cloud" class="w-5 h-5 text-accent-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white" data-th="การติดตั้ง EA ลงใน MetaTrader 5" data-en="Installing EA on MetaTrader 5">การติดตั้ง EA ลงใน MetaTrader 5</h3>
+                </div>
+                <p class="text-sm text-slate-400 mb-7 ml-12" data-th="ทำตามขั้นตอนเหล่านี้เพื่อนำไฟล์ .ex5 และ .set เข้าสู่ระบบ" data-en="Follow these steps to import your .ex5 and .set files.">ทำตามขั้นตอนเหล่านี้เพื่อนำไฟล์ .ex5 และ .set เข้าสู่ระบบ</p>
+
+                <div class="space-y-5">
+                    <!-- Step 1 -->
+                    <div class="step-card">
+                        <div class="step-num">1</div>
+                        <div class="glass rounded-xl p-5">
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="เปิดโฟลเดอร์ข้อมูล (Data Folder)" data-en="Open Data Folder">เปิดโฟลเดอร์ข้อมูล (Data Folder)</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="เปิดโปรแกรม MT5 ไปที่เมนู File → Open Data Folder → จากนั้นเข้าไปที่ MQL5 → Experts" data-en="Open MT5 → File → Open Data Folder → Navigate to MQL5 → Experts">เปิดโปรแกรม MT5 ไปที่เมนู File → Open Data Folder → จากนั้นเข้าไปที่ MQL5 → Experts</p>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="step-card">
+                        <div class="step-num">2</div>
+                        <div class="glass rounded-xl p-5">
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="วางไฟล์ EA" data-en="Paste EA File">วางไฟล์ EA</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="คัดลอกไฟล์ EA (.ex5) มาวางในโฟลเดอร์ Experts → ปิด-เปิด MT5 ใหม่ หรือกด Refresh ที่ Navigator" data-en="Copy the .ex5 file into Experts folder → Restart MT5 or Refresh in Navigator.">คัดลอกไฟล์ EA (.ex5) มาวางในโฟลเดอร์ Experts → ปิด-เปิด MT5 ใหม่ หรือกด Refresh ที่ Navigator</p>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="step-card">
+                        <div class="step-num">3</div>
+                        <div class="glass rounded-xl p-5">
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="อนุญาตการเทรด (Algo Trading)" data-en="Enable Algo Trading">อนุญาตการเทรด (Algo Trading)</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="กดปุ่ม Algo Trading ด้านบนให้เป็นสีเขียว → ลาก EA ลงกราฟ → ที่ Common ติ๊ก Allow Algo Trading และ Allow DLL imports" data-en="Click 'Algo Trading' toolbar button (green) → Drag EA to chart → In Common tab, tick 'Allow Algo Trading' and 'Allow DLL imports'.">กดปุ่ม Algo Trading ด้านบนให้เป็นสีเขียว → ลาก EA ลงกราฟ → ที่ Common ติ๊ก Allow Algo Trading และ Allow DLL imports</p>
+                        </div>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="step-card">
+                        <div class="step-num">4</div>
+                        <div class="glass rounded-xl p-5">
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="โหลดไฟล์ตั้งค่า (.set)" data-en="Load .set File">โหลดไฟล์ตั้งค่า (.set)</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="แท็บ Inputs → กด Load → เลือกไฟล์ .set ที่ตรงทุนของคุณ → กด OK → สังเกตไอคอนหน้ายิ้มหรือหมวกสีฟ้ามุมขวาบน" data-en="Inputs tab → Click Load → Select your .set file → Click OK → Look for the blue hat/smiley icon on chart.">แท็บ Inputs → กด Load → เลือกไฟล์ .set ที่ตรงทุนของคุณ → กด OK → สังเกตไอคอนหน้ายิ้มหรือหมวกสีฟ้ามุมขวาบน</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============== CONTENT: INPUTS =============== -->
+        <div id="content-inputs" class="space-y-4 anim-fade hidden">
+            <div class="glass rounded-xl p-5 mb-1">
+                <h3 class="font-bold text-lg text-white mb-1" data-th="อ้างอิงพารามิเตอร์หลัก" data-en="Key Input Parameters">อ้างอิงพารามิเตอร์หลัก</h3>
+                <p class="text-slate-500 text-sm" data-th="คำอธิบายตัวแปรสำคัญในหน้า Inputs" data-en="Explanations of crucial settings in the Inputs tab.">คำอธิบายตัวแปรสำคัญในหน้า Inputs</p>
+            </div>
+
+            <!-- Param: Lot -->
+            <div class="glass rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover">
+                <span class="param-badge bg-accent-500/10 text-accent-400 border border-accent-500/15">LotStart & Multiplier</span>
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-1" data-th="การจัดการล็อต (Lot Sizing)" data-en="Lot Management">การจัดการล็อต (Lot Sizing)</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-th="LotStart คือขนาดล็อตไม้แรก ส่วน LotMultiplier คือตัวคูณเมื่อเปิดไม้ถัดไปแบบ Grid (ควรตั้งไว้ต่ำ เช่น 1.05-1.20) และ MaxLot คือการจำกัดเพดานล็อตสูงสุด" data-en="LotStart is the initial size. LotMultiplier scales subsequent entries. MaxLot acts as a hard cap.">LotStart คือขนาดล็อตไม้แรก ส่วน LotMultiplier คือตัวคูณเมื่อเปิดไม้ถัดไปแบบ Grid (ควรตั้งไว้ต่ำ เช่น 1.05-1.20) และ MaxLot คือการจำกัดเพดานล็อตสูงสุด</p>
+                </div>
+            </div>
+
+            <!-- Param: Distance -->
+            <div class="glass rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover">
+                <span class="param-badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/15">DistanceStart</span>
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-1" data-th="ระยะห่าง (Grid Distance)" data-en="Grid Distance">ระยะห่าง (Grid Distance)</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-th="ระยะเริ่มต้น (หน่วย Pips) ระหว่างไม้ก่อนหน้ากับไม้ถัดไป ค่า DistanceMultiplier คือการขยายระยะให้กว้างขึ้นเรื่อยๆ" data-en="Initial gap (in pips) before the next add. DistanceMultiplier geometrically increases this gap.">ระยะเริ่มต้น (หน่วย Pips) ระหว่างไม้ก่อนหน้ากับไม้ถัดไป ค่า DistanceMultiplier คือการขยายระยะให้กว้างขึ้นเรื่อยๆ</p>
+                </div>
+            </div>
+
+            <!-- Param: SideMaxLoss -->
+            <div class="glass rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover">
+                <span class="param-badge bg-red-500/10 text-red-400 border border-red-500/15">SideMaxLossMoney</span>
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-1" data-th="ระบบแช่แข็งฝั่งขาดทุน (Per-Side Freeze)" data-en="Per-Side Freeze">ระบบแช่แข็งฝั่งขาดทุน (Per-Side Freeze)</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-th="หาก P/L ฝั่งใดฝั่งหนึ่งติดลบเกินค่าเงินที่ตั้งไว้ ฝั่งนั้นจะถูก Freeze (ไม่เปิดไม้เพิ่ม) เพื่อป้องกันการลาก" data-en="If net P/L of a side drops below this money value, the side freezes and stops adding new orders.">หาก P/L ฝั่งใดฝั่งหนึ่งติดลบเกินค่าเงินที่ตั้งไว้ ฝั่งนั้นจะถูก Freeze (ไม่เปิดไม้เพิ่ม) เพื่อป้องกันการลาก</p>
+                </div>
+            </div>
+
+            <!-- Param: KillSwitch -->
+            <div class="glass rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover">
+                <span class="param-badge bg-purple-500/10 text-purple-400 border border-purple-500/15">MaxEquityDD</span>
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-1" data-th="สวิตช์ปิดระบบฉุกเฉิน (Kill-Switch)" data-en="Global Kill-Switch">สวิตช์ปิดระบบฉุกเฉิน (Kill-Switch)</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-th="หาก Equity ลดลง (Balance - Equity) เกินค่าเงินที่ตั้งไว้ EA จะปิดทุกออเดอร์ของหน้าต่างนี้ทันทีเพื่อตัดขาดทุน" data-en="If (Balance - Equity) exceeds this money threshold, the EA force-closes all its positions immediately.">หาก Equity ลดลง (Balance - Equity) เกินค่าเงินที่ตั้งไว้ EA จะปิดทุกออเดอร์ของหน้าต่างนี้ทันทีเพื่อตัดขาดทุน</p>
+                </div>
+            </div>
+
+            <!-- Param: DocStrange Only -->
+            <div id="input-strange" class="rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover hidden" style="background: linear-gradient(135deg, rgba(251,191,36,0.06), rgba(251,191,36,0.02)); border: 1px solid rgba(251,191,36,0.12);">
+                <span class="param-badge bg-gold-400/15 text-gold-300 border border-gold-400/25">OppositePyramid</span>
+                <div>
+                    <h4 class="font-bold text-gold-200 text-sm mb-1" data-th="เปิดไม้แก้ฝั่งตรงข้าม (Hedge Recovery)" data-en="Hedge Recovery">เปิดไม้แก้ฝั่งตรงข้าม (Hedge Recovery)</h4>
+                    <p class="text-sm text-gold-300/60 leading-relaxed" data-th="เฉพาะใน DocStrange EA: เมื่อฝั่งหลักถูก Freeze ระบบจะเปิดไม้ Hedge ในทิศตรงข้ามเพื่อสร้าง Cash Flow และถัวเฉลี่ย" data-en="Exclusive to DocStrange EA: When a side is loss-frozen, it opens a controlled pyramid hedge in the opposite direction.">เฉพาะใน DocStrange EA: เมื่อฝั่งหลักถูก Freeze ระบบจะเปิดไม้ Hedge ในทิศตรงข้ามเพื่อสร้าง Cash Flow และถัวเฉลี่ย</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============== CONTENT: CONTACT =============== -->
+        <div id="content-contact" class="space-y-5 anim-fade hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                <!-- KVB -->
+                <div class="glass rounded-2xl p-6 glass-hover flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.04)); border: 1px solid rgba(16,185,129,0.15);">
+                            <i data-lucide="dollar-sign" class="w-5 h-5 text-emerald-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">KVB Broker Rebate</h4>
+                        <p class="text-sm text-slate-400 mb-5" data-th="สมัครผ่าน IB รับเงินคืน 40 USD ต่อ 1 Lot การเทรด" data-en="Register under our IB to receive $40 cashback per 1 Lot traded.">สมัครผ่าน IB รับเงินคืน 40 USD ต่อ 1 Lot การเทรด</p>
+                    </div>
+                    <a href="https://2c223nort.plusinv.com" target="_blank" class="cta-btn block w-full text-center font-semibold py-2.5 rounded-xl text-sm text-white border border-white/10" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));">
+                        <span data-th="สมัครเปิดบัญชี KVB →" data-en="Register KVB Account →">สมัครเปิดบัญชี KVB →</span>
+                    </a>
+                </div>
+
+                <!-- MHMarkets -->
+                <div class="glass rounded-2xl p-6 glass-hover flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(168,85,247,0.04)); border: 1px solid rgba(168,85,247,0.15);">
+                            <i data-lucide="gift" class="w-5 h-5 text-purple-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">MHMarkets Rebate + Free EA</h4>
+                        <p class="text-sm text-slate-400 mb-5" data-th="รับ Rebate คืน 40 USD/Lot และรับสิทธิ์ใช้งาน EA ฟรีแบบไม่จำกัดเมื่อเปิดบัญชี" data-en="Get $40/Lot Rebate and claim a FREE unlimited EA when you open an account.">รับ Rebate คืน 40 USD/Lot และรับสิทธิ์ใช้งาน EA ฟรีแบบไม่จำกัดเมื่อเปิดบัญชี</p>
+                    </div>
+                    <a href="https://my.mhmarkets.com/register?code=3r*eAhH8&pid=2CEZ&linkType=1&mt=51&ts=1749709968&r=4qq8pxS&sign=c73f3c92806320eb8c6877b12b26e4b8" target="_blank" class="cta-btn block w-full text-center font-semibold py-2.5 rounded-xl text-sm text-white border border-white/10" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));">
+                        <span data-th="สมัคร MHMarkets →" data-en="Register MHMarkets →">สมัคร MHMarkets →</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact CTA -->
+            <div class="relative rounded-2xl overflow-hidden p-8 text-center" style="background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(59,130,246,0.06) 50%, rgba(251,191,36,0.04) 100%); border: 1px solid rgba(251,191,36,0.1);">
+                <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at top, rgba(251,191,36,0.05), transparent 60%);"></div>
+                <h3 class="text-2xl font-bold text-white mb-2 relative z-10" data-th="ช่องทางการติดต่อทีมงาน" data-en="Contact Support Team">ช่องทางการติดต่อทีมงาน</h3>
+                <p class="text-slate-400 text-sm mb-6 relative z-10" data-th="หากพบปัญหาการใช้งานหรือขอรับไฟล์ .set ปรึกษาเราได้ฟรี" data-en="Need help with installation or .set files? Contact us for free support.">หากพบปัญหาการใช้งานหรือขอรับไฟล์ .set ปรึกษาเราได้ฟรี</p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 relative z-10">
+                    <a href="https://www.facebook.com/DoctorBullish" target="_blank" class="cta-btn flex items-center gap-2 bg-[#1877F2] px-5 py-2.5 rounded-xl font-semibold text-sm text-white w-full sm:w-auto justify-center">
+                        <i data-lucide="facebook" class="w-4 h-4"></i> Facebook Page
+                    </a>
+                    <a href="https://m.me/DoctorBullish" target="_blank" class="cta-btn flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white w-full sm:w-auto justify-center border border-white/10" style="background: rgba(255,255,255,0.06);">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i> Messenger
+                    </a>
+                </div>
+                <div class="mt-6 pt-5 border-t border-white/[0.06] relative z-10">
+                    <p class="text-xs text-slate-500 mb-1.5 uppercase tracking-wider font-semibold">LINE OpenChat</p>
+                    <p class="font-bold text-emerald-400 text-sm">DoctorBullish | ระบบเทรดอัตโนมัติ คืน 40$/Lot</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="border-t border-white/[0.04] py-10 text-center text-[13px] text-slate-600 relative z-10">
+        <p>© <span id="year"></span> Doctor Bullish — Available exclusively on MQL5.</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        lucide.createIcons();
+
+        const eaData = {
+            bullish: {
+                name: 'Doctor Bullish EA', version: 'v4.57', price: '$99',
+                desc_th: 'EA สำหรับเทรดทองคำ, BTC, EURUSD ด้วยกลยุทธ์ Trend Follow โดยใช้ EMA/RSI เป็นตัวกรองสัญญาณ',
+                desc_en: 'Trend Follow EA using EMA/RSI filters for trading Gold, BTC, and EURUSD.',
+                exampleFile: 'Doctor Bullish-V4.57-10k-XAUUSD-M30-Aggressive-31102025'
+            },
+            pips: {
+                name: 'Doctor Pips EA', version: 'v5.1', price: '$199',
+                desc_th: 'EA สำหรับเทรดทองคำ, BTC, EURUSD ด้วยกลยุทธ์ Trend Follow พร้อม Step-Index Grid',
+                desc_en: 'Trend Follow EA with Step-Index Grid for Gold, BTC, and EURUSD.',
+                exampleFile: 'Doctor Pips-V5.1-10k-XAUUSD-M30-Aggressive-06022026'
+            },
+            strange: {
+                name: 'DocStrange EA', version: 'v5.2', price: 'FREE',
+                desc_th: 'EA ประสิทธิภาพสูง ระบบ EMA Trend Gate ป้องกันการลาก พร้อม Opposite Pyramid Hedge ฝั่งตรงข้าม',
+                desc_en: 'High-performance EA with EMA Trend Gate and Opposite Pyramid Hedge.',
+                exampleFile: 'DocStrange-V5.2-10k-XAUUSD-M30-Hedge-15022026'
+            }
+        };
+
+        let currentLang = 'th';
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-th]').forEach(el => {
+                const txt = el.getAttribute(`data-${lang}`);
+                if (txt) el.innerHTML = txt;
+            });
+            const btnTh = document.getElementById('btn-th');
+            const btnEn = document.getElementById('btn-en');
+            if (lang === 'th') {
+                btnTh.style.cssText = 'background: rgba(251,191,36,0.12); color: #fcd34d; border: 1px solid rgba(251,191,36,0.25);';
+                btnEn.style.cssText = 'color: #64748b; border: 1px solid transparent;';
+                document.documentElement.lang = 'th';
+            } else {
+                btnEn.style.cssText = 'background: rgba(251,191,36,0.12); color: #fcd34d; border: 1px solid rgba(251,191,36,0.25);';
+                btnTh.style.cssText = 'color: #64748b; border: 1px solid transparent;';
+                document.documentElement.lang = 'en';
+            }
+            // Re-apply EA card
+            const activeBtn = document.querySelector('.ea-pill-active');
+            if (activeBtn) selectEA(activeBtn.id.replace('tab-', ''), false);
+        }
+
+        function selectEA(ea, doAnimate = true) {
+            const d = eaData[ea];
+            document.getElementById('ea-card-name').textContent = d.name;
+            document.getElementById('ea-card-version').textContent = d.version;
+            document.getElementById('ea-card-price').textContent = d.price;
+            document.getElementById('ea-card-desc').textContent = currentLang === 'th' ? d.desc_th : d.desc_en;
+            document.getElementById('example-filename').textContent = d.exampleFile;
+            document.getElementById('copy-text-btn').innerText = currentLang === 'th' ? 'คัดลอก' : 'Copy';
+
+            document.getElementById('input-strange').classList.toggle('hidden', ea !== 'strange');
+
+            ['bullish','pips','strange'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                el.className = `ea-pill ${t === ea ? 'ea-pill-active' : 'ea-pill-inactive'} flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-[13px] border`;
+            });
+
+            if (doAnimate) {
+                const card = document.querySelector('.glow-gold');
+                card.classList.remove('anim-fade');
+                void card.offsetWidth;
+                card.classList.add('anim-fade');
+            }
+        }
+
+        function selectMenu(menu) {
+            ['guide','install','inputs','contact'].forEach(m => {
+                const btn = document.getElementById(`menu-${m}`);
+                const content = document.getElementById(`content-${m}`);
+                if (m === menu) {
+                    btn.className = 'menu-tab menu-tab-active pb-3 px-1 text-[13px] font-semibold whitespace-nowrap flex items-center gap-2';
+                    content.classList.remove('hidden');
+                    content.classList.add('block');
+                } else {
+                    btn.className = 'menu-tab menu-tab-inactive pb-3 px-1 text-[13px] font-semibold whitespace-nowrap flex items-center gap-2';
+                    content.classList.remove('block');
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        function copyExample() {
+            const text = document.getElementById('example-filename').innerText;
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+            document.body.appendChild(ta);
+            ta.focus(); ta.select();
+            try {
+                document.execCommand('copy');
+                const btn = document.getElementById('copy-text-btn');
+                btn.innerText = currentLang === 'th' ? 'คัดลอกแล้ว ✓' : 'Copied ✓';
+                setTimeout(() => btn.innerText = currentLang === 'th' ? 'คัดลอก' : 'Copy', 2000);
+            } catch(e) { console.error(e); }
+            document.body.removeChild(ta);
+        }
+
+        setLang('th');
+    </script>
+</body>
+</html>
