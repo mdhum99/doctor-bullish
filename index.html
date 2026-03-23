@@ -40,7 +40,7 @@
         /* === Glow Effects === */
         .glow-gold { box-shadow: 0 0 60px -15px rgba(251,191,36,0.15); }
         .glow-blue { box-shadow: 0 0 60px -15px rgba(59,130,246,0.15); }
-        .glow-line { background: linear-gradient(90deg, transparent, rgba(251,191,36,0.3), transparent); height: 1px; }
+        .glow-purple { box-shadow: 0 0 60px -15px rgba(168,85,247,0.15); }
 
         /* === Glass Card === */
         .glass {
@@ -96,15 +96,7 @@
 
         /* === Animations === */
         @keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
-        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-        @keyframes pulse-slow { 0%,100% { opacity: 0.4; } 50% { opacity: 0.7; } }
         .anim-fade { animation: fadeUp 0.45s cubic-bezier(0.4,0,0.2,1) forwards; }
-        .shimmer-text {
-            background: linear-gradient(90deg, #fcd34d 0%, #fff 40%, #fcd34d 80%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shimmer 4s ease-in-out infinite;
-        }
 
         /* === Price Tag === */
         .price-tag {
@@ -119,9 +111,7 @@
         }
 
         /* === Step Cards === */
-        .step-card {
-            position: relative; padding-left: 3.5rem;
-        }
+        .step-card { position: relative; padding-left: 3.5rem; }
         .step-card .step-num {
             position: absolute; left: 0; top: 0;
             width: 2.5rem; height: 2.5rem;
@@ -144,13 +134,13 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; font-weight: 600;
             padding: 6px 12px; border-radius: 8px;
-            white-space: nowrap;
+            white-space: normal;
+            word-break: break-all;
         }
 
         /* === CTA Button === */
         .cta-btn {
-            position: relative; overflow: hidden;
-            transition: all 0.3s;
+            position: relative; overflow: hidden; transition: all 0.3s;
         }
         .cta-btn::before {
             content:''; position:absolute; inset:0;
@@ -214,7 +204,7 @@
                         Doctor Bullish EA
                     </h2>
                     <p id="ea-card-desc" class="text-slate-400 text-sm md:text-[15px] leading-relaxed max-w-xl">
-                        EA สำหรับเทรดทองคำ, BTC, EURUSD ด้วยกลยุทธ์ Trend Follow โดยใช้ EMA/RSI เป็นตัวกรองสัญญาณ
+                        EA สำหรับเทรดทองคำ, BTC, EURUSD ด้วยกลยุทธ์ Trend Follow โดยใช้ EMA/RSI เป็นตัวกรองสัญญาณ พร้อมกลไก Step-Index Grid เฉพาะตอนสวนทาง และจับคู่ปิดรวบกำไร
                     </p>
                     <!-- Assets -->
                     <div class="flex flex-wrap gap-2 pt-1">
@@ -251,13 +241,35 @@
                     <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> <span data-th="อ้างอิงพารามิเตอร์" data-en="Input Reference">อ้างอิงพารามิเตอร์</span>
                 </button>
                 <button onclick="selectMenu('contact')" id="menu-contact" class="menu-tab menu-tab-inactive pb-3 px-1 text-[13px] font-semibold whitespace-nowrap flex items-center gap-2">
-                    <i data-lucide="gift" class="w-4 h-4"></i> <span data-th="โปรโมชั่น & ติดต่อ" data-en="Rebates & Contacts">โปรโมชั่น & ติดต่อ</span>
+                    <i data-lucide="gift" class="w-4 h-4"></i> <span data-th="โปรโมชั่น & ติดต่อ" data-en="Promos & Contacts">โปรโมชั่น & ติดต่อ</span>
                 </button>
             </nav>
         </div>
 
         <!-- =============== CONTENT: GUIDE =============== -->
         <div id="content-guide" class="space-y-5 anim-fade block">
+
+            <!-- Promo Banner -->
+            <div class="relative rounded-2xl overflow-hidden p-6 text-left glow-purple" style="background: linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(168,85,247,0.02) 100%); border: 1px solid rgba(168,85,247,0.2);">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="award" class="w-5 h-5 text-purple-400"></i>
+                            <h3 class="text-lg font-bold text-white" data-th="ข้อเสนอพิเศษ: รับไฟล์ .set ฟรี 100%!" data-en="Exclusive Offer: Get 100% Free .set Files!">ข้อเสนอพิเศษ: รับไฟล์ .set ฟรี 100%!</h3>
+                        </div>
+                        <p class="text-sm text-purple-200/80" data-th="รับรหัสส่วนลดดาวน์โหลดไฟล์ Setting พิเศษฟรี เพียงทำตาม 3 ขั้นตอนง่ายๆ:" data-en="Claim your 100% discount code for premium .set files by following these 3 easy steps:">รับรหัสส่วนลดดาวน์โหลดไฟล์ Setting พิเศษฟรี เพียงทำตาม 3 ขั้นตอนง่ายๆ:</p>
+                        <ol class="list-decimal list-inside mt-3 text-[13px] text-slate-300 space-y-1">
+                            <li data-th="รีวิว 5 ดาวให้ EA บนหน้าเว็บ MQL5 Market" data-en="Leave an honest 5-star review on the MQL5 Market page.">รีวิว 5 ดาวให้ EA บนหน้าเว็บ MQL5 Market</li>
+                            <li data-th="ส่งภาพหน้าจอ (Screenshot) การรีวิวมาทาง Inbox (PM)" data-en="Send a screenshot of your review via Private Message (PM).">ส่งภาพหน้าจอ (Screenshot) การรีวิวมาทาง Inbox (PM)</li>
+                            <li data-th="ทีมงานจะตรวจสอบและส่งโค้ดดาวน์โหลดให้ฟรีทันที!" data-en="Once verified, we will send you the discount code to download for free.">ทีมงานจะตรวจสอบและส่งโค้ดดาวน์โหลดให้ฟรีทันที!</li>
+                        </ol>
+                    </div>
+                    <a href="https://www.mql5.com/en/market/product/166327?source=Site+Profile+Seller#!tab=reviews" target="_blank" class="cta-btn shrink-0 bg-purple-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-900/50 hover:bg-purple-500 text-center w-full sm:w-auto">
+                        <span data-th="เขียนรีวิวบน MQL5" data-en="Leave a Review">เขียนรีวิวบน MQL5</span>
+                    </a>
+                </div>
+            </div>
 
             <!-- Naming Convention -->
             <section class="glass rounded-2xl overflow-hidden glass-hover">
@@ -356,39 +368,55 @@
                     </div>
                     <h3 class="text-lg font-bold text-white" data-th="การติดตั้ง EA ลงใน MetaTrader 5" data-en="Installing EA on MetaTrader 5">การติดตั้ง EA ลงใน MetaTrader 5</h3>
                 </div>
-                <p class="text-sm text-slate-400 mb-7 ml-12" data-th="ทำตามขั้นตอนเหล่านี้เพื่อนำไฟล์ .ex5 และ .set เข้าสู่ระบบ" data-en="Follow these steps to import your .ex5 and .set files.">ทำตามขั้นตอนเหล่านี้เพื่อนำไฟล์ .ex5 และ .set เข้าสู่ระบบ</p>
+                <p class="text-sm text-slate-400 mb-7 ml-12" data-th="ทำตามขั้นตอนเหล่านี้เพื่อเริ่มรัน EA พร้อมการตั้งค่า .set อัตโนมัติ" data-en="Follow these steps to deploy your EA and load the .set files correctly.">ทำตามขั้นตอนเหล่านี้เพื่อเริ่มรัน EA พร้อมการตั้งค่า .set อัตโนมัติ</p>
 
                 <div class="space-y-5">
                     <!-- Step 1 -->
                     <div class="step-card">
                         <div class="step-num">1</div>
                         <div class="glass rounded-xl p-5">
-                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="เปิดโฟลเดอร์ข้อมูล (Data Folder)" data-en="Open Data Folder">เปิดโฟลเดอร์ข้อมูล (Data Folder)</h4>
-                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="เปิดโปรแกรม MT5 ไปที่เมนู File → Open Data Folder → จากนั้นเข้าไปที่ MQL5 → Experts" data-en="Open MT5 → File → Open Data Folder → Navigate to MQL5 → Experts">เปิดโปรแกรม MT5 ไปที่เมนู File → Open Data Folder → จากนั้นเข้าไปที่ MQL5 → Experts</p>
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="เปิดโฟลเดอร์ข้อมูล (Open Data Folder)" data-en="Open Data Folder">เปิดโฟลเดอร์ข้อมูล (Open Data Folder)</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="เปิดโปรแกรม MT5 ไปที่เมนู File → Open Data Folder → จากนั้นเข้าไปที่ MQL5 → Experts" data-en="Open MT5 → File → Open Data Folder → Navigate to MQL5 → Experts.">เปิดโปรแกรม MT5 ไปที่เมนู File → Open Data Folder → จากนั้นเข้าไปที่ MQL5 → Experts</p>
                         </div>
                     </div>
                     <!-- Step 2 -->
                     <div class="step-card">
                         <div class="step-num">2</div>
                         <div class="glass rounded-xl p-5">
-                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="วางไฟล์ EA" data-en="Paste EA File">วางไฟล์ EA</h4>
-                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="คัดลอกไฟล์ EA (.ex5) มาวางในโฟลเดอร์ Experts → ปิด-เปิด MT5 ใหม่ หรือกด Refresh ที่ Navigator" data-en="Copy the .ex5 file into Experts folder → Restart MT5 or Refresh in Navigator.">คัดลอกไฟล์ EA (.ex5) มาวางในโฟลเดอร์ Experts → ปิด-เปิด MT5 ใหม่ หรือกด Refresh ที่ Navigator</p>
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="วางไฟล์ EA (Paste EA File)" data-en="Paste EA File">วางไฟล์ EA (Paste EA File)</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="คัดลอกไฟล์ EA (สกุล .ex5) มาวางในโฟลเดอร์ Experts → จากนั้นคลิกขวาที่เมนู Navigator แล้วกด Refresh (หรือปิด-เปิด MT5 ใหม่)" data-en="Copy the .ex5 file into the Experts folder → Right-click in the Navigator panel and select Refresh (or restart MT5).">คัดลอกไฟล์ EA (สกุล .ex5) มาวางในโฟลเดอร์ Experts → จากนั้นคลิกขวาที่เมนู Navigator แล้วกด Refresh (หรือปิด-เปิด MT5 ใหม่)</p>
                         </div>
                     </div>
                     <!-- Step 3 -->
                     <div class="step-card">
                         <div class="step-num">3</div>
                         <div class="glass rounded-xl p-5">
-                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="อนุญาตการเทรด (Algo Trading)" data-en="Enable Algo Trading">อนุญาตการเทรด (Algo Trading)</h4>
-                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="กดปุ่ม Algo Trading ด้านบนให้เป็นสีเขียว → ลาก EA ลงกราฟ → ที่ Common ติ๊ก Allow Algo Trading และ Allow DLL imports" data-en="Click 'Algo Trading' toolbar button (green) → Drag EA to chart → In Common tab, tick 'Allow Algo Trading' and 'Allow DLL imports'.">กดปุ่ม Algo Trading ด้านบนให้เป็นสีเขียว → ลาก EA ลงกราฟ → ที่ Common ติ๊ก Allow Algo Trading และ Allow DLL imports</p>
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="ลากลงกราฟ (Drag to Chart)" data-en="Drag to Chart">ลากลงกราฟ (Drag to Chart)</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="เปิดกราฟคู่เงินและ Timeframe ที่ต้องการ (เช่น XAUUSD, M15) → ลากชื่อ EA จาก Navigator มาวางบนหน้ากราฟ" data-en="Open your desired chart (e.g., XAUUSD, M15) → Drag the EA from the Navigator panel and drop it onto the chart.">เปิดกราฟคู่เงินและ Timeframe ที่ต้องการ (เช่น XAUUSD, M15) → ลากชื่อ EA จาก Navigator มาวางบนหน้ากราฟ</p>
                         </div>
                     </div>
                     <!-- Step 4 -->
                     <div class="step-card">
                         <div class="step-num">4</div>
                         <div class="glass rounded-xl p-5">
-                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="โหลดไฟล์ตั้งค่า (.set)" data-en="Load .set File">โหลดไฟล์ตั้งค่า (.set)</h4>
-                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="แท็บ Inputs → กด Load → เลือกไฟล์ .set ที่ตรงทุนของคุณ → กด OK → สังเกตไอคอนหน้ายิ้มหรือหมวกสีฟ้ามุมขวาบน" data-en="Inputs tab → Click Load → Select your .set file → Click OK → Look for the blue hat/smiley icon on chart.">แท็บ Inputs → กด Load → เลือกไฟล์ .set ที่ตรงทุนของคุณ → กด OK → สังเกตไอคอนหน้ายิ้มหรือหมวกสีฟ้ามุมขวาบน</p>
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="อนุญาตการเทรด (Allow Algo Trading)" data-en="Enable Algo Trading">อนุญาตการเทรด (Allow Algo Trading)</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="ในหน้าต่างป๊อปอัป EA ให้ไปที่แท็บ Common → ติ๊กถูกช่อง Allow Algo Trading และ Allow DLL imports" data-en="In the EA settings popup, go to the Common tab → tick 'Allow Algo Trading' and 'Allow DLL imports'.">ในหน้าต่างป๊อปอัป EA ให้ไปที่แท็บ Common → ติ๊กถูกช่อง Allow Algo Trading และ Allow DLL imports</p>
+                        </div>
+                    </div>
+                    <!-- Step 5 -->
+                    <div class="step-card">
+                        <div class="step-num">5</div>
+                        <div class="glass rounded-xl p-5">
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="โหลดไฟล์ตั้งค่า (Load .set File)" data-en="Load .set File">โหลดไฟล์ตั้งค่า (Load .set File)</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="สลับไปที่แท็บ Inputs → กดปุ่ม Load ด้านล่างขวา → เลือกไฟล์ .set ที่ตรงกับทุนของคุณ → กด OK" data-en="Switch to the Inputs tab → Click the Load button (bottom right) → Select your .set file → Click OK.">สลับไปที่แท็บ Inputs → กดปุ่ม Load ด้านล่างขวา → เลือกไฟล์ .set ที่ตรงกับทุนของคุณ → กด OK</p>
+                        </div>
+                    </div>
+                    <!-- Step 6 -->
+                    <div class="step-card">
+                        <div class="step-num">6</div>
+                        <div class="glass rounded-xl p-5">
+                            <h4 class="font-bold text-white text-sm mb-1.5" data-th="เปิดระบบเทรดอัตโนมัติ (Start AutoTrading)" data-en="Start AutoTrading">เปิดระบบเทรดอัตโนมัติ (Start AutoTrading)</h4>
+                            <p class="text-[13px] text-slate-400 leading-relaxed" data-th="กดปุ่ม Algo Trading ที่แถบเมนูด้านบนของ MT5 ให้กลายเป็นสีเขียว → สังเกตมุมขวาบนของกราฟจะมีไอคอนหน้ายิ้มหรือหมวกสีฟ้า แปลว่า EA พร้อมทำงานแล้ว!" data-en="Click the 'Algo Trading' button on the top MT5 toolbar to turn it green. You should see a blue hat or smiley icon at the top right of your chart.">กดปุ่ม Algo Trading ที่แถบเมนูด้านบนของ MT5 ให้กลายเป็นสีเขียว → สังเกตมุมขวาบนของกราฟจะมีไอคอนหน้ายิ้มหรือหมวกสีฟ้า แปลว่า EA พร้อมทำงานแล้ว!</p>
                         </div>
                     </div>
                 </div>
@@ -398,52 +426,57 @@
         <!-- =============== CONTENT: INPUTS =============== -->
         <div id="content-inputs" class="space-y-4 anim-fade hidden">
             <div class="glass rounded-xl p-5 mb-1">
-                <h3 class="font-bold text-lg text-white mb-1" data-th="อ้างอิงพารามิเตอร์หลัก" data-en="Key Input Parameters">อ้างอิงพารามิเตอร์หลัก</h3>
-                <p class="text-slate-500 text-sm" data-th="คำอธิบายตัวแปรสำคัญในหน้า Inputs" data-en="Explanations of crucial settings in the Inputs tab.">คำอธิบายตัวแปรสำคัญในหน้า Inputs</p>
+                <h3 class="font-bold text-lg text-white mb-1" data-th="อ้างอิงพารามิเตอร์เชิงลึก" data-en="Deep Input Reference">อ้างอิงพารามิเตอร์เชิงลึก</h3>
+                <p class="text-slate-500 text-sm" data-th="เจาะลึกฟังก์ชันการตั้งค่า Inputs เพื่อการปรับแต่ง EA ให้เข้ากับกลยุทธ์ของคุณ" data-en="Detailed explanations of key input parameters to customize your strategy.">เจาะลึกฟังก์ชันการตั้งค่า Inputs เพื่อการปรับแต่ง EA ให้เข้ากับกลยุทธ์ของคุณ</p>
             </div>
 
-            <!-- Param: Lot -->
+            <!-- Param Group 1: Lot & Grid -->
             <div class="glass rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover">
-                <span class="param-badge bg-accent-500/10 text-accent-400 border border-accent-500/15">LotStart & Multiplier</span>
+                <span class="param-badge bg-accent-500/10 text-accent-400 border border-accent-500/15 shrink-0 w-full md:w-48 text-center">Lot & Distance</span>
                 <div>
-                    <h4 class="font-bold text-white text-sm mb-1" data-th="การจัดการล็อต (Lot Sizing)" data-en="Lot Management">การจัดการล็อต (Lot Sizing)</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed" data-th="LotStart คือขนาดล็อตไม้แรก ส่วน LotMultiplier คือตัวคูณเมื่อเปิดไม้ถัดไปแบบ Grid (ควรตั้งไว้ต่ำ เช่น 1.05-1.20) และ MaxLot คือการจำกัดเพดานล็อตสูงสุด" data-en="LotStart is the initial size. LotMultiplier scales subsequent entries. MaxLot acts as a hard cap.">LotStart คือขนาดล็อตไม้แรก ส่วน LotMultiplier คือตัวคูณเมื่อเปิดไม้ถัดไปแบบ Grid (ควรตั้งไว้ต่ำ เช่น 1.05-1.20) และ MaxLot คือการจำกัดเพดานล็อตสูงสุด</p>
+                    <h4 class="font-bold text-white text-sm mb-1" data-th="การจัดการล็อตและระยะห่าง (Grid Sizing)" data-en="Lot & Grid Management">การจัดการล็อตและระยะห่าง (Grid Sizing)</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-2" data-th="LotStart คือขนาดล็อตไม้แรก, LotMultiplier คือตัวคูณล็อตไม้ถัดไป (เช่น 1.05-1.20), และ MaxLot คือการจำกัดเพดานล็อตสูงสุดเพื่อความปลอดภัย" data-en="LotStart is the initial size. LotMultiplier scales subsequent entries. MaxLot acts as a hard safety cap.">LotStart คือขนาดล็อตไม้แรก, LotMultiplier คือตัวคูณล็อตไม้ถัดไป (เช่น 1.05-1.20), และ MaxLot คือการจำกัดเพดานล็อตสูงสุดเพื่อความปลอดภัย</p>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-th="DistanceStart คือระยะห่าง (Pips) เริ่มต้นระหว่างไม้, DistanceMultiplier คือตัวคูณระยะห่าง ทำให้ไม้ถัดๆ ไปกว้างขึ้นเรื่อยๆ (เช่น 1.5x) เพื่อแก้ปัญหาการออกออเดอร์ถี่เกินไปในเทรนด์แรง" data-en="DistanceStart is the initial gap (in pips). DistanceMultiplier geometrically increases the gap for subsequent layers to prevent over-stacking in strong trends.">DistanceStart คือระยะห่าง (Pips) เริ่มต้นระหว่างไม้, DistanceMultiplier คือตัวคูณระยะห่าง ทำให้ไม้ถัดๆ ไปกว้างขึ้นเรื่อยๆ (เช่น 1.5x) เพื่อแก้ปัญหาการออกออเดอร์ถี่เกินไปในเทรนด์แรง</p>
                 </div>
             </div>
 
-            <!-- Param: Distance -->
+            <!-- Param Group 2: Safety Guards -->
             <div class="glass rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover">
-                <span class="param-badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/15">DistanceStart</span>
+                <span class="param-badge bg-red-500/10 text-red-400 border border-red-500/15 shrink-0 w-full md:w-48 text-center">Guards & Kill-Switch</span>
                 <div>
-                    <h4 class="font-bold text-white text-sm mb-1" data-th="ระยะห่าง (Grid Distance)" data-en="Grid Distance">ระยะห่าง (Grid Distance)</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed" data-th="ระยะเริ่มต้น (หน่วย Pips) ระหว่างไม้ก่อนหน้ากับไม้ถัดไป ค่า DistanceMultiplier คือการขยายระยะให้กว้างขึ้นเรื่อยๆ" data-en="Initial gap (in pips) before the next add. DistanceMultiplier geometrically increases this gap.">ระยะเริ่มต้น (หน่วย Pips) ระหว่างไม้ก่อนหน้ากับไม้ถัดไป ค่า DistanceMultiplier คือการขยายระยะให้กว้างขึ้นเรื่อยๆ</p>
+                    <h4 class="font-bold text-white text-sm mb-1" data-th="ระบบความปลอดภัยระดับพอร์ต (Safety Rules)" data-en="Safety & Drawdown Rules">ระบบความปลอดภัยระดับพอร์ต (Safety Rules)</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-2" data-th="SideMaxLossMoney: ถ้ายอด P/L ของฝั่ง Buy หรือ Sell ติดลบเกินค่าเงิน ($) ที่ตั้งไว้ ฝั่งนั้นจะถูก 'แช่แข็ง (Freeze)' ทันที ไม่เปิดไม้เพิ่ม เพื่อป้องกันพอร์ตลากลึก" data-en="SideMaxLossMoney: If floating loss of a specific side exceeds this money value, that side freezes (stops adding orders) to prevent deep drawdown.">SideMaxLossMoney: ถ้ายอด P/L ของฝั่ง Buy หรือ Sell ติดลบเกินค่าเงิน ($) ที่ตั้งไว้ ฝั่งนั้นจะถูก 'แช่แข็ง (Freeze)' ทันที ไม่เปิดไม้เพิ่ม เพื่อป้องกันพอร์ตลากลึก</p>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-2" data-th="MaxEquityDD: สวิตช์ปิดฉุกเฉิน หาก Balance - Equity ติดลบเกินค่าเงิน ($) ที่กำหนด EA จะตัดขาดทุนปิดทุกออเดอร์ของหน้าต่างนี้ทันที" data-en="MaxEquityDD: Global kill switch. If Balance minus Equity exceeds this value, all positions are force-closed immediately.">MaxEquityDD: สวิตช์ปิดฉุกเฉิน หาก Balance - Equity ติดลบเกินค่าเงิน ($) ที่กำหนด EA จะตัดขาดทุนปิดทุกออเดอร์ของหน้าต่างนี้ทันที</p>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-th="MaxSpreadPoints: ป้องกันการออกออเดอร์ในช่วงสเปรดถ่าง (เช่น ช่วงข่าว) โดยกำหนดเป็นค่า Points" data-en="MaxSpreadPoints: Blocks entries when spread widens beyond this point value (e.g., during news events).">MaxSpreadPoints: ป้องกันการออกออเดอร์ในช่วงสเปรดถ่าง (เช่น ช่วงข่าว) โดยกำหนดเป็นค่า Points</p>
                 </div>
             </div>
 
-            <!-- Param: SideMaxLoss -->
+            <!-- Param Group 3: Trend Control -->
             <div class="glass rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover">
-                <span class="param-badge bg-red-500/10 text-red-400 border border-red-500/15">SideMaxLossMoney</span>
+                <span class="param-badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/15 shrink-0 w-full md:w-48 text-center">EMA Trend Gating</span>
                 <div>
-                    <h4 class="font-bold text-white text-sm mb-1" data-th="ระบบแช่แข็งฝั่งขาดทุน (Per-Side Freeze)" data-en="Per-Side Freeze">ระบบแช่แข็งฝั่งขาดทุน (Per-Side Freeze)</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed" data-th="หาก P/L ฝั่งใดฝั่งหนึ่งติดลบเกินค่าเงินที่ตั้งไว้ ฝั่งนั้นจะถูก Freeze (ไม่เปิดไม้เพิ่ม) เพื่อป้องกันการลาก" data-en="If net P/L of a side drops below this money value, the side freezes and stops adding new orders.">หาก P/L ฝั่งใดฝั่งหนึ่งติดลบเกินค่าเงินที่ตั้งไว้ ฝั่งนั้นจะถูก Freeze (ไม่เปิดไม้เพิ่ม) เพื่อป้องกันการลาก</p>
+                    <h4 class="font-bold text-white text-sm mb-1" data-th="ตัวกรองและหยุดตามแนวโน้ม (EMA Auto-Pause)" data-en="EMA Trend Gating">ตัวกรองและหยุดตามแนวโน้ม (EMA Auto-Pause)</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-th="UseEMACrossoverPause: หัวใจหลักของ EA คือการหยุดเทรนด์สวนทาง หากเส้น EMA 21 และ 89 ครอสกันชี้ลง EA จะบล็อก (Pause) การออกออเดอร์ฝั่ง Buy อัตโนมัติ (และสลับกัน) เพื่อเทรดตามทิศทางลม" data-en="UseEMACrossoverPause: The core logic. Fast/Slow EMA crossover automatically pauses the adverse side (e.g., blocks Buy entries in a downtrend) to trade with momentum.">UseEMACrossoverPause: หัวใจหลักของ EA คือการหยุดเทรนด์สวนทาง หากเส้น EMA 21 และ 89 ครอสกันชี้ลง EA จะบล็อก (Pause) การออกออเดอร์ฝั่ง Buy อัตโนมัติ (และสลับกัน) เพื่อเทรดตามทิศทางลม</p>
                 </div>
             </div>
 
-            <!-- Param: KillSwitch -->
+            <!-- Param Group 4: Profit Netting -->
             <div class="glass rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover">
-                <span class="param-badge bg-purple-500/10 text-purple-400 border border-purple-500/15">MaxEquityDD</span>
+                <span class="param-badge bg-purple-500/10 text-purple-400 border border-purple-500/15 shrink-0 w-full md:w-48 text-center">Profit Taking</span>
                 <div>
-                    <h4 class="font-bold text-white text-sm mb-1" data-th="สวิตช์ปิดระบบฉุกเฉิน (Kill-Switch)" data-en="Global Kill-Switch">สวิตช์ปิดระบบฉุกเฉิน (Kill-Switch)</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed" data-th="หาก Equity ลดลง (Balance - Equity) เกินค่าเงินที่ตั้งไว้ EA จะปิดทุกออเดอร์ของหน้าต่างนี้ทันทีเพื่อตัดขาดทุน" data-en="If (Balance - Equity) exceeds this money threshold, the EA force-closes all its positions immediately.">หาก Equity ลดลง (Balance - Equity) เกินค่าเงินที่ตั้งไว้ EA จะปิดทุกออเดอร์ของหน้าต่างนี้ทันทีเพื่อตัดขาดทุน</p>
+                    <h4 class="font-bold text-white text-sm mb-1" data-th="ระบบรวบปิดกำไร (Smart Netting)" data-en="Smart Pair Netting">ระบบรวบปิดกำไร (Smart Netting)</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-2" data-th="MinProfitToClose_SameSide: จับคู่ออเดอร์ฝั่งเดียวกัน (เช่น Buy คู่ Buy) โดยเอากำไรไม้บวกสุด ไปหักลบไม้ลบสุด ถ้ายอดสุทธิชนะค่าเงินที่ตั้งไว้ จะรวบปิดเป็นคู่ๆ (Pair-Close)" data-en="MinProfitToClose_SameSide: Greedily pairs the highest-profit order with the deepest-loss order on the same side. Closes them if net profit is above threshold.">MinProfitToClose_SameSide: จับคู่ออเดอร์ฝั่งเดียวกัน (เช่น Buy คู่ Buy) โดยเอากำไรไม้บวกสุด ไปหักลบไม้ลบสุด ถ้ายอดสุทธิชนะค่าเงินที่ตั้งไว้ จะรวบปิดเป็นคู่ๆ (Pair-Close)</p>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-th="MinProfitToClose_CrossSide: คล้ายกัน แต่เป็นการรวบไม้กำไรฝั่งนึง ไปหักลบไม้ขาดทุนอีกฝั่งนึง (Buy คู่ Sell) ช่วยแก้ปัญหาไม้ติดค้างได้อย่างเป็นระบบ" data-en="MinProfitToClose_CrossSide: Nets a winning Buy against a losing Sell (or vice versa) to smoothly clear out lingering trades.">MinProfitToClose_CrossSide: คล้ายกัน แต่เป็นการรวบไม้กำไรฝั่งนึง ไปหักลบไม้ขาดทุนอีกฝั่งนึง (Buy คู่ Sell) ช่วยแก้ปัญหาไม้ติดค้างได้อย่างเป็นระบบ</p>
                 </div>
             </div>
 
-            <!-- Param: DocStrange Only -->
+            <!-- Param Group 5: DocStrange Only -->
             <div id="input-strange" class="rounded-xl p-5 flex flex-col md:flex-row gap-4 items-start glass-hover hidden" style="background: linear-gradient(135deg, rgba(251,191,36,0.06), rgba(251,191,36,0.02)); border: 1px solid rgba(251,191,36,0.12);">
-                <span class="param-badge bg-gold-400/15 text-gold-300 border border-gold-400/25">OppositePyramid</span>
+                <span class="param-badge bg-gold-400/15 text-gold-300 border border-gold-400/25 shrink-0 w-full md:w-48 text-center">OppPyra Hedge</span>
                 <div>
-                    <h4 class="font-bold text-gold-200 text-sm mb-1" data-th="เปิดไม้แก้ฝั่งตรงข้าม (Hedge Recovery)" data-en="Hedge Recovery">เปิดไม้แก้ฝั่งตรงข้าม (Hedge Recovery)</h4>
-                    <p class="text-sm text-gold-300/60 leading-relaxed" data-th="เฉพาะใน DocStrange EA: เมื่อฝั่งหลักถูก Freeze ระบบจะเปิดไม้ Hedge ในทิศตรงข้ามเพื่อสร้าง Cash Flow และถัวเฉลี่ย" data-en="Exclusive to DocStrange EA: When a side is loss-frozen, it opens a controlled pyramid hedge in the opposite direction.">เฉพาะใน DocStrange EA: เมื่อฝั่งหลักถูก Freeze ระบบจะเปิดไม้ Hedge ในทิศตรงข้ามเพื่อสร้าง Cash Flow และถัวเฉลี่ย</p>
+                    <h4 class="font-bold text-gold-200 text-sm mb-1" data-th="เปิดไม้แก้ฝั่งตรงข้าม (Opposite Pyramid)" data-en="Opposite Pyramid Hedge">เปิดไม้แก้ฝั่งตรงข้าม (Opposite Pyramid)</h4>
+                    <p class="text-sm text-gold-300/80 leading-relaxed mb-2" data-th="ฟีเจอร์เด่นเฉพาะใน DocStrange EA: เมื่อเปิด OppositePyramid_OnFreezeLoss = true หากมีฝั่งใดถูก Freeze ด้วยการขาดทุน ระบบจะเปลี่ยนวิกฤตเป็นโอกาส ด้วยการเปิดไม้อีกฝั่งนึงเพื่อทำกำไรและสร้าง Rebate" data-en="Exclusive to DocStrange EA: With OppositePyramid_OnFreezeLoss enabled, if a side freezes due to loss, the EA opens an opposite-direction grid to generate cash flow and hedge drawdown.">ฟีเจอร์เด่นเฉพาะใน DocStrange EA: เมื่อเปิด OppositePyramid_OnFreezeLoss = true หากมีฝั่งใดถูก Freeze ด้วยการขาดทุน ระบบจะเปลี่ยนวิกฤตเป็นโอกาส ด้วยการเปิดไม้อีกฝั่งนึงเพื่อทำกำไรและสร้าง Rebate</p>
+                    <p class="text-sm text-gold-300/80 leading-relaxed" data-th="สามารถควบคุมได้เข้มงวดด้วย OppPyra_MaxLayers (จำนวนชั้น), OppPyra_MaxTotalLot (เพดานล็อตสูงสุดของการ hedge) และ ProtectEquityDD" data-en="Strictly controlled via OppPyra_MaxLayers, OppPyra_MaxTotalLot, and ProtectEquityDD to prevent over-hedging.">สามารถควบคุมได้เข้มงวดด้วย OppPyra_MaxLayers (จำนวนชั้น), OppPyra_MaxTotalLot (เพดานล็อตสูงสุดของการ hedge) และ ProtectEquityDD</p>
                 </div>
             </div>
         </div>
@@ -459,7 +492,7 @@
                             <i data-lucide="dollar-sign" class="w-5 h-5 text-emerald-400"></i>
                         </div>
                         <h4 class="text-lg font-bold text-white mb-2">KVB Broker Rebate</h4>
-                        <p class="text-sm text-slate-400 mb-5" data-th="สมัครผ่าน IB รับเงินคืน 40 USD ต่อ 1 Lot การเทรด" data-en="Register under our IB to receive $40 cashback per 1 Lot traded.">สมัครผ่าน IB รับเงินคืน 40 USD ต่อ 1 Lot การเทรด</p>
+                        <p class="text-sm text-slate-400 mb-5" data-th="สมัครผ่านลิงก์ IB เพื่อรับเงินคืน Rebate สูงสุด 40 USD ต่อการเทรด 1 Lot อัตโนมัติ" data-en="Register under our IB link to receive automatic $40 cashback per 1 Lot traded.">สมัครผ่านลิงก์ IB เพื่อรับเงินคืน Rebate สูงสุด 40 USD ต่อการเทรด 1 Lot อัตโนมัติ</p>
                     </div>
                     <a href="https://2c223nort.plusinv.com" target="_blank" class="cta-btn block w-full text-center font-semibold py-2.5 rounded-xl text-sm text-white border border-white/10" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));">
                         <span data-th="สมัครเปิดบัญชี KVB →" data-en="Register KVB Account →">สมัครเปิดบัญชี KVB →</span>
@@ -473,7 +506,7 @@
                             <i data-lucide="gift" class="w-5 h-5 text-purple-400"></i>
                         </div>
                         <h4 class="text-lg font-bold text-white mb-2">MHMarkets Rebate + Free EA</h4>
-                        <p class="text-sm text-slate-400 mb-5" data-th="รับ Rebate คืน 40 USD/Lot และรับสิทธิ์ใช้งาน EA ฟรีแบบไม่จำกัดเมื่อเปิดบัญชี" data-en="Get $40/Lot Rebate and claim a FREE unlimited EA when you open an account.">รับ Rebate คืน 40 USD/Lot และรับสิทธิ์ใช้งาน EA ฟรีแบบไม่จำกัดเมื่อเปิดบัญชี</p>
+                        <p class="text-sm text-slate-400 mb-5" data-th="รับ Rebate คืน 40 USD/Lot พร้อมรับสิทธิ์ใช้งาน EA ฟรีแบบ Unlimited Account เมื่อสมัครต่อลิงก์นี้" data-en="Get $40/Lot Rebate and claim a FREE unlimited account EA by registering via this link.">รับ Rebate คืน 40 USD/Lot พร้อมรับสิทธิ์ใช้งาน EA ฟรีแบบ Unlimited Account เมื่อสมัครต่อลิงก์นี้</p>
                     </div>
                     <a href="https://my.mhmarkets.com/register?code=3r*eAhH8&pid=2CEZ&linkType=1&mt=51&ts=1749709968&r=4qq8pxS&sign=c73f3c92806320eb8c6877b12b26e4b8" target="_blank" class="cta-btn block w-full text-center font-semibold py-2.5 rounded-xl text-sm text-white border border-white/10" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));">
                         <span data-th="สมัคร MHMarkets →" data-en="Register MHMarkets →">สมัคร MHMarkets →</span>
@@ -485,18 +518,21 @@
             <div class="relative rounded-2xl overflow-hidden p-8 text-center" style="background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(59,130,246,0.06) 50%, rgba(251,191,36,0.04) 100%); border: 1px solid rgba(251,191,36,0.1);">
                 <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at top, rgba(251,191,36,0.05), transparent 60%);"></div>
                 <h3 class="text-2xl font-bold text-white mb-2 relative z-10" data-th="ช่องทางการติดต่อทีมงาน" data-en="Contact Support Team">ช่องทางการติดต่อทีมงาน</h3>
-                <p class="text-slate-400 text-sm mb-6 relative z-10" data-th="หากพบปัญหาการใช้งานหรือขอรับไฟล์ .set ปรึกษาเราได้ฟรี" data-en="Need help with installation or .set files? Contact us for free support.">หากพบปัญหาการใช้งานหรือขอรับไฟล์ .set ปรึกษาเราได้ฟรี</p>
+                <p class="text-slate-400 text-sm mb-6 relative z-10" data-th="หากพบปัญหาการใช้งาน, ต้องการไฟล์ .set, หรือต้องการส่งรีวิวเพื่อรับสิทธิ์ ปรึกษาเราได้ฟรี" data-en="Need setup help, .set files, or want to submit your review for promos? Contact us anytime.">หากพบปัญหาการใช้งาน, ต้องการไฟล์ .set, หรือต้องการส่งรีวิวเพื่อรับสิทธิ์ ปรึกษาเราได้ฟรี</p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-3 relative z-10">
                     <a href="https://www.facebook.com/DoctorBullish" target="_blank" class="cta-btn flex items-center gap-2 bg-[#1877F2] px-5 py-2.5 rounded-xl font-semibold text-sm text-white w-full sm:w-auto justify-center">
                         <i data-lucide="facebook" class="w-4 h-4"></i> Facebook Page
                     </a>
                     <a href="https://m.me/DoctorBullish" target="_blank" class="cta-btn flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white w-full sm:w-auto justify-center border border-white/10" style="background: rgba(255,255,255,0.06);">
-                        <i data-lucide="message-circle" class="w-4 h-4"></i> Messenger
+                        <i data-lucide="message-circle" class="w-4 h-4"></i> Inbox Messenger
+                    </a>
+                    <a href="#" class="cta-btn flex items-center gap-2 bg-[#00B900] px-5 py-2.5 rounded-xl font-semibold text-sm text-white w-full sm:w-auto justify-center">
+                        <i data-lucide="message-square" class="w-4 h-4"></i> LINE OpenChat
                     </a>
                 </div>
                 <div class="mt-6 pt-5 border-t border-white/[0.06] relative z-10">
-                    <p class="text-xs text-slate-500 mb-1.5 uppercase tracking-wider font-semibold">LINE OpenChat</p>
+                    <p class="text-xs text-slate-500 mb-1.5 uppercase tracking-wider font-semibold" data-th="กลุ่มแชทสาธารณะสำหรับผู้ใช้งาน" data-en="Public Community Chat">กลุ่มแชทสาธารณะสำหรับผู้ใช้งาน</p>
                     <p class="font-bold text-emerald-400 text-sm">DoctorBullish | ระบบเทรดอัตโนมัติ คืน 40$/Lot</p>
                 </div>
             </div>
@@ -516,20 +552,20 @@
         const eaData = {
             bullish: {
                 name: 'Doctor Bullish EA', version: 'v4.57', price: '$99',
-                desc_th: 'EA สำหรับเทรดทองคำ, BTC, EURUSD ด้วยกลยุทธ์ Trend Follow โดยใช้ EMA/RSI เป็นตัวกรองสัญญาณ',
-                desc_en: 'Trend Follow EA using EMA/RSI filters for trading Gold, BTC, and EURUSD.',
+                desc_th: 'EA สำหรับเทรดทองคำ, BTC, EURUSD ด้วยกลยุทธ์ Trend Follow โดยใช้ EMA/RSI เป็นตัวกรองสัญญาณ พร้อมกลไก Step-Index Grid เฉพาะตอนสวนทาง และจับคู่ปิดรวบกำไร',
+                desc_en: 'Trend Follow EA using EMA/RSI filters for trading Gold, BTC, and EURUSD. Features adverse-only Step-Index Grid and smart pair netting.',
                 exampleFile: 'Doctor Bullish-V4.57-10k-XAUUSD-M30-Aggressive-31102025'
             },
             pips: {
                 name: 'Doctor Pips EA', version: 'v5.1', price: '$199',
-                desc_th: 'EA สำหรับเทรดทองคำ, BTC, EURUSD ด้วยกลยุทธ์ Trend Follow พร้อม Step-Index Grid',
-                desc_en: 'Trend Follow EA with Step-Index Grid for Gold, BTC, and EURUSD.',
+                desc_th: 'EA สำหรับเทรดทองคำ, BTC, EURUSD ด้วยกลยุทธ์ Trend Follow พร้อม Step-Index Grid และระบบป้องกันความเสี่ยงที่เข้มงวด',
+                desc_en: 'Trend Follow EA with Step-Index Grid for Gold, BTC, and EURUSD. Features strict drawdown controls and spread guards.',
                 exampleFile: 'Doctor Pips-V5.1-10k-XAUUSD-M30-Aggressive-06022026'
             },
             strange: {
                 name: 'DocStrange EA', version: 'v5.2', price: 'FREE',
-                desc_th: 'EA ประสิทธิภาพสูง ระบบ EMA Trend Gate ป้องกันการลาก พร้อม Opposite Pyramid Hedge ฝั่งตรงข้าม',
-                desc_en: 'High-performance EA with EMA Trend Gate and Opposite Pyramid Hedge.',
+                desc_th: 'EA ประสิทธิภาพสูง ระบบ EMA Trend Gate ป้องกันการลาก พร้อม Opposite Pyramid Hedge ฝั่งตรงข้ามเมื่อถูก Freeze เปลี่ยนวิกฤตเป็นโอกาส',
+                desc_en: 'High-performance EA with EMA Trend Gate and Opposite Pyramid Hedge to survive drawdowns and generate rebate flow.',
                 exampleFile: 'DocStrange-V5.2-10k-XAUUSD-M30-Hedge-15022026'
             }
         };
